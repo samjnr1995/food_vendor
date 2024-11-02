@@ -3,6 +3,9 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../screens/description_screen.dart';
+import '../screens/home_screen.dart';
+import '../screens/profile_screen.dart';
 import 'labels.dart';
 class ReusedContainer extends StatelessWidget {
   final String image;
@@ -62,6 +65,55 @@ class ImageFlipContainer extends StatelessWidget {
     );
   }
 }
+class ButtomNav extends StatelessWidget {
+  final Function() ontap;
+  const ButtomNav({super.key, required this.ontap});
+
+  @override
+  Widget build(BuildContext context) {
+    return  BottomNavigationBar(
+      items: [
+        BottomNavigationBarItem(
+            label: '',
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
+              child: Image.asset(
+                Labels.frameThree,
+                width: 50,
+                height: 50,
+              ),
+            )),
+        BottomNavigationBarItem(
+            label: '',
+            icon: GestureDetector(
+              onTap: ontap,
+              child: Image.asset(
+                Labels.frameFour,
+                width: 90,
+                height: 90,
+              ),
+            )),
+        BottomNavigationBarItem(
+            label: '',
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const ProfileScreen()));
+              },
+              child: Image.asset(
+                Labels.frameFive,
+                width: 50,
+                height: 50,
+              ),
+            ))
+      ],
+    );
+  }
+}
+
 
 class ClipWidget extends StatelessWidget {
   final String image;

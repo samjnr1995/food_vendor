@@ -2,10 +2,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_catering_service_app/components/cusom_colours.dart';
-import 'package:food_catering_service_app/screens/description_field.dart';
+import 'package:food_catering_service_app/components/custom_field.dart';
+import 'package:food_catering_service_app/screens/cart_screen.dart';
+import 'package:food_catering_service_app/screens/description_screen.dart';
 import 'package:food_catering_service_app/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badges;
+import '../../providers/cart_model_provider.dart';
 import '../labels.dart';
 
 class CustomRichText extends StatelessWidget {
@@ -67,14 +71,17 @@ class HomeScreenFirstRow extends StatelessWidget {
               children: [
                 Image.asset(
                   Labels.leading,
-                  height: 30,
-                  width: 30,
+                  height: 35,
+                  width: 35,
                 ),
-                SizedBox(width: 20.w),
+                SizedBox(width: 25.w),
                 Image.asset(
                   Labels.ellipses,
-                  height: 30,
-                  width: 30,
+                  height: 25,
+                  width: 25,
+                ),
+                SizedBox(
+                  width: 10.h,
                 ),
                 Text(
                   Labels.dhaka,
@@ -86,14 +93,41 @@ class HomeScreenFirstRow extends StatelessWidget {
                 Icon(Icons.arrow_drop_down, color: Colors.grey, size: 24.sp),
               ],
             ),
-             SizedBox(
-              width: 60.w,
+            SizedBox(
+              width: 28.w,
             ),
-            Image.asset(
-              Labels.ping,
-              width: 30,
-              height: 30,
-            )
+            Consumer<CartModelProvider>(
+              builder: (context, cartProvider, child) {
+                return IconButton(
+                  color: Colors.white,
+                  icon: cartProvider.uniqueProductCount == 0
+                      ? const Icon(Icons.add_shopping_cart,color: Colors.black,)
+                      : Container(
+                    height: 25.h,
+                    width: 25.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.redAccent
+                    ),
+                        child: Center(
+                          child: Text(
+                              cartProvider.uniqueProductCount.toString(),
+                              style: AppTextStyles.subTextStyle.copyWith(
+                                color: Colors.white
+                              )
+                            ),
+                        ),
+                      ),
+                  iconSize: 25,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CartDetails()));
+                  },
+                );
+              },
+            ),
           ],
         ),
       ],
@@ -120,12 +154,12 @@ class LastRowHomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const DescriptionScreen()));
               },
-              child:
-                  Image.asset(Labels.frameFour, height: 90, width: 90)),
+              child: Image.asset(Labels.frameFour, height: 90, width: 90)),
           Image.asset(Labels.frameFive, height: 50, width: 50)
         ]);
   }
 }
+
 class ReusableRow extends StatelessWidget {
   final String? text;
   const ReusableRow({
@@ -222,33 +256,25 @@ class HomeTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 250,
-          child: TextField(
-            decoration: InputDecoration(
-              hintStyle: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xff888888)),
-              hintText: Labels.search,
-              prefixIcon: const Icon(Icons.search, color: Colors.grey),
-              fillColor: const Color(0xffF5F5F5),
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.r),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-        ),
-        Image.asset(
-          Labels.btn,
-          width: 70,
-          height: 100,
-        )
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          const SizedBox(
+              width: 240,
+              child: CustomField(
+                fillColor: Color(0xffF5F5F5),
+                preIcon: Icons.search,
+                hint: 'Search lunch, dishes',
+                type: TextInputType.text,
+              )),
+          Image.asset(
+            Labels.btn,
+            height: 110,
+            width: 100,
+          )
+        ],
+      ),
     );
   }
 }

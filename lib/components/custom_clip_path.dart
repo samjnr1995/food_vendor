@@ -5,7 +5,7 @@ class CustomClipPath extends CustomClipper<Path> {
     var path = Path();
 
     // Move to the start point (top-left)
-    path.lineTo(0.0, size.height -30); // Start at a point near the bottom
+    path.lineTo(0.0, size.height -40); // Start at a point near the bottom
 
     // Create an upward arc-shaped inward curve at the bottom
     path.cubicTo(

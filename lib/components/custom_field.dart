@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_catering_service_app/components/cusom_colours.dart';
 class CustomField extends StatelessWidget {
   final String hint;
   final AutovalidateMode? val;
   final String? actualHint;
   final Color? textColor;
   final bool isMap;
-  final Color? fillColor;
+  final Color? fillColor;  // Fill color for the text field
   final bool isDisabled;
   final bool readOnly;
   final IconData? icon;
-
   final IconData? preIcon;
   final int? maxlines;
   final int? maxlength;
@@ -25,6 +25,7 @@ class CustomField extends StatelessWidget {
   final TextCapitalization? tc;
   final TextInputAction textInputAction;
   final List<TextInputFormatter>? inputFormatters;
+
   const CustomField({
     Key? key,
     required this.hint,
@@ -73,24 +74,25 @@ class CustomField extends StatelessWidget {
         maxLines: maxlines ?? 1,
         cursorColor: Colors.grey,
         style: const TextStyle(
-          fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400),
+            fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400),
         decoration: InputDecoration(
-
-          fillColor: fillColor ?? Colors.white,
-          filled: isMap,
+          fillColor: fillColor ?? Colors.white, // Fill color applied here
+          filled: true, // Set this to true to make the fill color visible
           isDense: true,
-          contentPadding:
-          const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
+          contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
           hintText: actualHint ?? hint,
           alignLabelWithHint: true,
-          hintStyle: const TextStyle(color: Color(0xff888888), fontWeight: FontWeight.w400,fontSize: 14),
+          hintStyle: const TextStyle(color: Color(0xff888888), fontWeight: FontWeight.w400, fontSize: 14),
+
+          // Focused border with white background
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
-              color: Colors.red,
+              color: AppColors.customWhite,
               width: 1.5,
             ),
           ),
+          // Enabled border
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(
@@ -98,6 +100,7 @@ class CustomField extends StatelessWidget {
               width: 1.5,
             ),
           ),
+          // Disabled border
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(
@@ -105,13 +108,15 @@ class CustomField extends StatelessWidget {
               width: 1.5,
             ),
           ),
+          // Focused border
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
-              color: Color(0xFFC30A3B),
+              color: AppColors.customGreen,
               width: 1.5,
             ),
           ),
+          // Error border
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
@@ -124,6 +129,7 @@ class CustomField extends StatelessWidget {
             fontSize: 12,
             color: Colors.red,
           ),
+          // Suffix and prefix icon handling
           suffixIconConstraints: const BoxConstraints(
             minWidth: 35,
             minHeight: 30,
@@ -132,14 +138,15 @@ class CustomField extends StatelessWidget {
               ? null
               : Icon(
             preIcon,
-            color: color,
+            color: Color(0xff888888),
+            size: 30,
           ),
           suffixIcon: IconButton(
             onPressed: click,
             icon: Icon(
               icon,
               size: 18,
-              color: const Color(0xffC30A3B),
+              color:  Colors.grey,
             ),
           ),
         ),

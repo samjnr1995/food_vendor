@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_catering_service_app/providers/cart_model_provider.dart';
 import 'package:food_catering_service_app/screens/second_checkout_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../models/counter_provider.dart';
 import 'cusom_colours.dart';
 import 'labels.dart';
 
@@ -28,7 +31,7 @@ class ContainerWidget extends StatelessWidget {
           ),
           const SizedBox(width: 20), // Spacing between buttons
           DetailButton(
-            iconPath: Labels.frame3,
+            iconPath: 'assets/time.png',
             text: text!,
           ),
         ],
@@ -59,25 +62,29 @@ class LastContainerCheckout extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 8.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    Labels.total,
-                    style: GoogleFonts.inter(
-                      fontSize: 14.sp,
-                      color: const Color(0xff9AD983),
-                    ),
-                  ),
-                  Text(
-                    Labels.twoK,
-                    style: GoogleFonts.inter(
-                      color: const Color(0xff323434),
-                      fontSize: 25.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+              Consumer<CartModelProvider>(
+                builder: ( context, cartProvider , child) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        Labels.total,
+                        style: GoogleFonts.inter(
+                          fontSize: 14.sp,
+                          color: const Color(0xff9AD983),
+                        ),
+                      ),
+                      Text(
+                      '\$${cartProvider.totalPrice.toStringAsFixed(2)}',
+                        style: GoogleFonts.inter(
+                          color: const Color(0xff323434),
+                          fontSize: 25.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -239,7 +246,7 @@ class DetailButton extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset(iconPath), // Reusable image asset
+          Image.asset(iconPath,height: 20,width: 20,), // Reusable image asset
           const SizedBox(width: 5),
           Text(
             text, // Reusable text
@@ -255,14 +262,24 @@ class DetailButton extends StatelessWidget {
 }
 
 class PlusMinusContainer extends StatelessWidget {
+  final double? wid;
+  final double? widt;
+  final double? hei;
+  final double? height;
+
   const PlusMinusContainer({
     super.key,
+    this.height,
+    this.wid,
+    this.hei,
+    this.widt,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
+      height: hei ?? 35,
+      width: widt ?? 90,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10), // Border radius
         color: const Color(0xFF9AD983),
@@ -271,40 +288,44 @@ class PlusMinusContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10), // Border radius
-              ),
-              child: const Icon(
-                Icons.remove,
-                color: Color(0xFF9AD983),
-              ),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Text(
-              '1',
-              style: GoogleFonts.inter(
-                color: const Color(0xFFFFFFFF),
-                fontWeight: FontWeight.w700,
-                fontSize: 28.sp,
+            GestureDetector(
+              onTap: () => context.read<CounterProvider>().decrement(),
+              child: Container(
+                height: height ?? 20,
+                width: wid ?? 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10), // Border radius
+                ),
+                child: const Icon(
+                  Icons.remove,
+                  color: Color(0xFF9AD983),
+                ),
               ),
             ),
-            const SizedBox(
-              width: 8,
-            ),
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10), // Border radius
+            const SizedBox(width: 8),
+            Consumer<CounterProvider>(
+              builder: (context, provider, _) => Text(
+                '${provider.count}',
+                style: GoogleFonts.inter(
+                  color: const Color(0xFFFFFFFF),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 28.sp,
+                ),
               ),
-              child: const Icon(Icons.add, color: Color(0xFF9AD983)),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => context.read<CounterProvider>().increment(),
+              child: Container(
+                height: 25,
+                width: 25,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10), // Border radius
+                ),
+                child: const Icon(Icons.add, color: Color(0xFF9AD983)),
+              ),
             ),
           ],
         ),
@@ -312,6 +333,7 @@ class PlusMinusContainer extends StatelessWidget {
     );
   }
 }
+
 class HomeScreenContainer extends StatelessWidget {
   const HomeScreenContainer({
     super.key,
@@ -377,13 +399,14 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100,
         decoration: BoxDecoration(
             color: const Color(0xFF9AD983),
             borderRadius: BorderRadius.circular(20)),
-        padding: const EdgeInsets.all(20), // Background color
+        padding: const EdgeInsets.all(15), // Background color
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(
               width: 15,
@@ -407,12 +430,12 @@ class ProfileContainer extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(
-              height: 40,
+             SizedBox(
+              width: 35.w,
             ),
             const CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage('assets/AVATAR.png'),
+              radius: 25,
+              backgroundImage: AssetImage('assets/AVATAR.png',),
             ),
           ],
         ));
@@ -440,6 +463,7 @@ class PopularWidget extends StatelessWidget {
         Text(
           Labels.seeAll,
           style: GoogleFonts.inter(
+            decoration: TextDecoration.underline,
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
             color: const Color(0xff888888),

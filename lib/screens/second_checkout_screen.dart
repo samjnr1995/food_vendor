@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_catering_service_app/screens/cart_two.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../components/custom_button.dart';
@@ -210,10 +211,10 @@ class SecondCheckoutScreen extends StatelessWidget {
             Center(
                 child: CustomButton(
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const DescriptionScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CartTwoScreen()));
                   },
                   text: "Confirm & Continue",
                   textColor: const Color(0xFFFFFFFF),

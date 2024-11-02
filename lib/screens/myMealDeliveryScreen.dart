@@ -93,7 +93,7 @@ class MyMealDelivery extends StatelessWidget {
                 text: Labels.five,
               ),
               SizedBox(
-                height: 10.h,
+                height: 15.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -101,51 +101,22 @@ class MyMealDelivery extends StatelessWidget {
                   Text(
                     Labels.next,
                     style: GoogleFonts.inter(
-                      fontSize: 16.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF323434),
                     ),
                   ),
-                  SizedBox(width: 40.sp),
+                  SizedBox(width: 45.sp),
                   Text(Labels.twenty,
                       style: GoogleFonts.inter(
-                        fontSize: 12.sp,
+                        fontSize: 11.sp,
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF323434),
                       ))
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image.asset(
-                    Labels.firstImage,
-                    width: 80.w,
-                    height: 80.w,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ProfileScreen()));
-                    },
-                    child: Image.asset(
-                      Labels.secondImage,
-                      width: 80.w,
-                      height: 80.w,
-                    ),
-                  ),
-                  Image.asset(
-                    Labels.thirdImage,
-                    width: 65.w,
-                    height: 65.w,
-                  ),
-                ],
-              )
+              SizedBox(height: 20,),
+              const HomeScreenContainer(),
             ],
           ),
         )
@@ -178,7 +149,7 @@ class DateContainer extends StatelessWidget {
             Text(
               Labels.yourMeal,
               style: GoogleFonts.inter(
-                fontSize: 16.sp,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
                 color: const Color(0xFF323434),
               ),
@@ -187,13 +158,14 @@ class DateContainer extends StatelessWidget {
             Text(
               Labels.unable,
               style: GoogleFonts.inter(
-                fontSize: 12.sp,
+                fontSize: 10.sp,
                 fontWeight: FontWeight.w400,
                 color: const Color(0xFF888888),
               ),
             ),
           ],
         ),
+        SizedBox(width: 25,),
         _buildDateBox(Labels.mon, Labels.twentyFour),
       ],
     );
@@ -211,7 +183,7 @@ class MyMealContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 10.h,
-      width: 95.w,
+      width: 97.w,
       decoration:
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(15)),
     );

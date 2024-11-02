@@ -25,6 +25,7 @@ class CheckOutScreen extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -49,7 +50,7 @@ class CheckOutScreen extends StatelessWidget {
                 ),
                 Text(
                   Labels.paymentMethod,
-                  style: GoogleFonts.nunitoSans(
+                  style: GoogleFonts.inter(
                       fontSize: 22,
                       fontWeight: FontWeight.w500,
                       color: AppColors.customBlack),
@@ -57,20 +58,21 @@ class CheckOutScreen extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                  const Row(
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ReusedContainer(
+                    const ReusedContainer(
                         image: Labels.png, color: AppColors.customGreen),
                     SizedBox(
-                      width: 15,
+                      width: 20.w,
                     ),
-                    ReusedContainer(
+                    const ReusedContainer(
                         image: Labels.pngImage,
                         color: AppColors.customWhite),
                     SizedBox(
-                      width: 15,
+                      width: 20.w,
                     ),
-                    ReusedContainer(
+                    const ReusedContainer(
                       image: Labels.checkImage,
                       color: AppColors.customWhite,
                     ),
